@@ -36,7 +36,6 @@ body {
 }
 
 
-
 .container {
 
     width:90%;
@@ -188,9 +187,20 @@ body.unlocked {
 
     background-repeat:no-repeat;
 
-    color:white;
+    color:white !important;
 
     font-family:Georgia, serif;
+
+    text-shadow:0 1px 3px rgba(0,0,0,0.7);
+
+
+}
+
+
+
+body.unlocked h1 {
+
+    color:white !important;
 
 }
 
@@ -205,15 +215,6 @@ body.unlocked .terminal {
 
     box-shadow:0 0 30px #ff69b4;
 
-
-}
-
-
-
-body.unlocked h1,
-body.unlocked p {
-
-    color:white;
 
 }
 
@@ -237,6 +238,26 @@ body.unlocked button {
 
 
 
+.welcome-title {
+
+
+    font-size:42px;
+
+    margin-bottom:60px;
+
+
+}
+
+
+
+body.unlocked #login {
+
+    display:none;
+
+}
+
+
+
 #welcome {
 
     display:none;
@@ -245,11 +266,9 @@ body.unlocked button {
 
 
 
-.welcome-title {
+body.unlocked #welcome {
 
-    font-size:42px;
-
-    margin-bottom:60px;
+    display:block;
 
 }
 
@@ -325,7 +344,7 @@ Willkommen Melina ♡
 
 
 
-<button onclick="location.href='challenge.html'">
+<button onclick="location.href='mission1.html'">
 
 [ WEITER ]
 
@@ -369,7 +388,7 @@ result.className="success";
 
 
 result.innerHTML =
-"ACCESS GRANTED<br><br>Neue Umgebung wird geladen...";
+"ACCESS GRANTED<br><br>Verbindung wird getrennt...<br><br>Neue Umgebung wird geladen...";
 
 
 
@@ -387,12 +406,22 @@ progress += 10;
 
 
 
+let blocks =
+"█".repeat(progress / 10);
+
+
+
+let empty =
+"░".repeat(10 - (progress / 10));
+
+
+
 result.innerHTML =
-"Neue Umgebung wird geladen...<br><br>"
+"ACCESS GRANTED<br><br>Neue Umgebung wird geladen...<br><br>"
 +
-"█".repeat(progress/10)
+blocks
 +
-"░".repeat(10-progress/10)
+empty
 +
 " "
 +
@@ -412,14 +441,10 @@ clearInterval(loading);
 setTimeout(()=>{
 
 
-document.getElementById("login").style.display="none";
-
-document.getElementById("welcome").style.display="block";
-
 document.body.classList.add("unlocked");
 
 
-},500);
+},1000);
 
 
 
@@ -431,7 +456,7 @@ document.body.classList.add("unlocked");
 
 
 
-},1000);
+},1500);
 
 
 
