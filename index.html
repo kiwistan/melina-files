@@ -17,89 +17,91 @@
 
 body {
 
-    margin:0;
-    height:100vh;
+    margin: 0;
+    height: 100vh;
 
-    background:black;
+    background: black;
 
-    color:#00ff66;
+    color: #00ff66;
 
-    font-family:"Courier New", monospace;
+    font-family: "Courier New", monospace;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 
 
 .container {
 
-    width:90%;
-    max-width:600px;
+    width: 90%;
+    max-width: 600px;
 
 }
 
 
 .terminal {
 
-    border:2px solid #00ff66;
+    border: 2px solid #00ff66;
 
-    padding:30px;
+    padding: 30px;
 
-    box-shadow:0 0 25px #00ff66;
+    box-shadow: 0 0 25px #00ff66;
 
 }
 
 
 h1 {
 
-    text-align:center;
+    text-align: center;
 
-    font-size:28px;
+    font-size: 28px;
 
-    margin-bottom:30px;
+    margin-bottom: 30px;
 
 }
 
 
 #text {
 
-    font-size:18px;
+    font-size: 18px;
 
-    line-height:1.7;
+    line-height: 1.7;
 
-    min-height:250px;
+    min-height: 250px;
 
 }
 
 
 button {
 
-    margin-top:30px;
+    display: block;
 
-    padding:15px 35px;
+    margin: 30px auto 0;
 
-    background:black;
+    padding: 15px 35px;
 
-    color:#00ff66;
+    background: black;
 
-    border:2px solid #00ff66;
+    color: #00ff66;
 
-    font-family:"Courier New", monospace;
+    border: 2px solid #00ff66;
 
-    font-size:18px;
+    font-family: "Courier New", monospace;
 
-    cursor:pointer;
+    font-size: 18px;
+
+    cursor: pointer;
 
 }
 
 
 button:hover {
 
-    background:#00ff66;
+    background: #00ff66;
 
-    color:black;
+    color: black;
 
 }
 
@@ -136,7 +138,7 @@ SYSTEM BOOTING...
 <script>
 
 
-const lines=[
+const lines = [
 
 "Identität wird geprüft...",
 
@@ -161,9 +163,10 @@ const lines=[
 ];
 
 
-let line=0;
 
-let char=0;
+let line = 0;
+
+let char = 0;
 
 
 
@@ -176,7 +179,7 @@ if(line < lines.length){
 if(char < lines[line].length){
 
 
-document.getElementById("text").innerHTML +=
+document.getElementById("text").innerHTML += 
 lines[line].charAt(char);
 
 
@@ -197,7 +200,7 @@ document.getElementById("text").innerHTML += "<br>";
 
 line++;
 
-char=0;
+char = 0;
 
 
 setTimeout(typeText,700);
@@ -216,17 +219,12 @@ setTimeout(()=>{
 
 
 document.getElementById("text").innerHTML +=
-"<br><br>[ ACCESS GRANTED ]";
-
-
-setTimeout(()=>{
-
-
-document.getElementById("text").innerHTML +=
-"<br><br><button onclick=\"location.href='mission1.html'\">[ MISSION STARTEN ]</button>";
-
-
-},1000);
+`
+<br><br>
+<button onclick="location.href='access.html'">
+[ WEITER ]
+</button>
+`;
 
 
 },1000);
