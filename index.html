@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
 
 <meta charset="UTF-8">
@@ -8,238 +7,129 @@
 
 <title>System Activation</title>
 
-
 <style>
 
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
 }
 
-
-body {
-
+body{
     margin:0;
     height:100vh;
-
     background:black;
-
     color:#00ff66;
-
     font-family:"Courier New", monospace;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
 }
 
-
-.container {
-
+.container{
     width:90%;
     max-width:600px;
-
 }
 
-
-.terminal {
-
+.terminal{
     border:2px solid #00ff66;
-
     padding:30px;
-
     text-align:center;
-
     box-shadow:0 0 25px #00ff66;
-
 }
 
-
-
-h1 {
-
+h1{
     font-size:28px;
-
 }
 
-
-
-p {
-
+p{
     font-size:18px;
-
     line-height:1.6;
-
 }
 
-
-
-button {
-
+button{
     margin-top:30px;
-
     padding:15px 35px;
-
     background:black;
-
     color:#00ff66;
-
     border:2px solid #00ff66;
-
     font-family:"Courier New", monospace;
-
     font-size:18px;
-
     cursor:pointer;
-
+    transition:.2s;
 }
 
-
-
-button:hover {
-
+button:hover{
     background:#00ff66;
-
     color:black;
-
 }
 
-
-
-.hidden {
-
+.hidden{
     display:none;
-
 }
 
-
-
-#boot {
-
+#boot{
     text-align:left;
-
     margin-top:20px;
-
+    min-height:280px;
 }
-
-
-
-.cursor {
-
-    animation:blink 1s infinite;
-
-}
-
-
-@keyframes blink {
-
-    50% {
-        opacity:0;
-    }
-
-}
-
-
 
 </style>
 
-
 </head>
-
-
 
 <body>
 
-
 <div class="container">
-
 
 <div class="terminal">
 
+<h1>SYSTEM OFFLINE</h1>
 
-<h1>
-SYSTEM OFFLINE
-</h1>
-
-
-<p>
-Audio-System nicht aktiviert.
-</p>
-
-
-<p>
-Initialisierung erforderlich.
-</p>
-
-
+<p>Audio-System nicht aktiviert.</p>
+<p>Initialisierung erforderlich.</p>
 
 <button onclick="activateSystem()">
-
 [ ACTIVATE SYSTEM ]
-
 </button>
 
-
-
 <div id="boot" class="hidden">
-
 <p id="text"></p>
+</div>
 
 </div>
 
-
-
 </div>
-
-
-</div>
-
-
 
 <script>
-
-
-// Audio erzeugen
 
 let audioContext;
 
 
-
+// Weicher Klickton
 function playSound(){
 
+    if(!audioContext) return;
 
-if(!audioContext) return;
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
+    osc.type = "triangle";
 
-let oscillator = audioContext.createOscillator();
+    osc.frequency.value = 180 + Math.random()*30;
 
-let gain = audioContext.createGain();
+    gain.gain.setValueAtTime(0.0025,audioContext.currentTime);
 
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        audioContext.currentTime+0.018
+    );
 
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
 
-oscillator.type="square";
-
-oscillator.frequency.value=700;
-
-
-gain.gain.value=0.03;
-
-
-
-oscillator.connect(gain);
-
-gain.connect(audioContext.destination);
-
-
-
-oscillator.start();
-
-
-oscillator.stop(audioContext.currentTime + 0.05);
-
+    osc.start();
+    osc.stop(audioContext.currentTime+0.018);
 
 }
-
 
 
 
@@ -270,117 +160,85 @@ const lines=[
 ];
 
 
-
 let line=0;
-
 let char=0;
-
 
 
 function typeText(){
 
+    if(line < lines.length){
 
-if(line < lines.length){
+        if(char < lines[line].length){
 
+            let text=document.getElementById("text");
 
-if(char < lines[line].length){
+            text.innerHTML += lines[line].charAt(char);
 
+            // Nur manchmal ein Klick
+            if(Math.random()>0.45){
+                playSound();
+            }
 
-let text=document.getElementById("text");
+            char++;
 
+            setTimeout(typeText,50);
 
-text.innerHTML += lines[line].charAt(char);
+        }
 
+        else{
 
-playSound();
+            document.getElementById("text").innerHTML += "<br>";
 
+            line++;
+            char=0;
 
-char++;
+            setTimeout(typeText,700);
 
+        }
 
-setTimeout(typeText,50);
+    }
 
+    else{
 
-}
+        setTimeout(()=>{
 
-else{
+            document.getElementById("text").innerHTML +=
+            "<br><br>[ ACCESS GRANTED ]";
 
+            setTimeout(()=>{
 
-document.getElementById("text").innerHTML += "<br>";
+                document.getElementById("text").innerHTML +=
+                "<br><br><button onclick=\"location.href='mission1.html'\">[ MISSION STARTEN ]</button>";
 
+            },1000);
 
-line++;
+        },1000);
 
-char=0;
-
-
-setTimeout(typeText,700);
-
-
-}
-
-
-}
-
-
-else{
-
-
-setTimeout(()=>{
-
-
-document.getElementById("text").innerHTML +=
-"<br><br>[ ACCESS GRANTED ]";
-
-
-setTimeout(()=>{
-
-
-document.getElementById("text").innerHTML +=
-"<br><br><button onclick=\"location.href='mission1.html'\">[ MISSION STARTEN ]</button>";
-
-
-},1000);
-
-
-},1000);
-
+    }
 
 }
-
-
-}
-
 
 
 
 function activateSystem(){
 
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-audioContext = new AudioContext();
+    document.querySelector("button").style.display="none";
 
+    document.querySelector("h1").innerHTML="SYSTEM ONLINE";
 
-document.querySelector("button").style.display="none";
+    document.querySelectorAll("p").forEach(p=>{
+        p.style.display="none";
+    });
 
+    document.getElementById("boot").classList.remove("hidden");
 
-document.querySelector("h1").innerHTML="SYSTEM ONLINE";
-
-
-document.querySelector("p").style.display="none";
-
-
-document.getElementById("boot").classList.remove("hidden");
-
-
-typeText();
-
+    typeText();
 
 }
 
-
 </script>
 
-
 </body>
-
 </html>
