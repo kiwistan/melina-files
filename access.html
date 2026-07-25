@@ -152,6 +152,22 @@ button:hover {
 
     font-size:20px;
 
+    font-weight:bold;
+
+}
+
+
+.success {
+
+    color:#00ff66;
+
+}
+
+
+.error {
+
+    color:red;
+
 }
 
 
@@ -227,11 +243,18 @@ let correctPassword = "prinzessin";
 
 
 
+let result = document.getElementById("result");
+
+
+
 if(password === correctPassword){
 
 
-document.getElementById("result").innerHTML =
+result.innerHTML =
 "ACCESS GRANTED";
+
+
+result.className="success";
 
 
 setTimeout(()=>{
@@ -249,8 +272,11 @@ location.href="mission1.html";
 else{
 
 
-document.getElementById("result").innerHTML =
+result.innerHTML =
 "ACCESS DENIED";
+
+
+result.className="error";
 
 
 document.getElementById("password").value="";
