@@ -165,20 +165,24 @@ button {
 
 
 
-/* Neues Theme nach Zugang */
+/* Neues Theme */
 
 
 body.unlocked {
 
-    background-image:url("hintergund.jpg");
+
+    background-image:url("hintergrund.jpg");
 
     background-size:cover;
 
     background-position:center;
 
+    background-repeat:no-repeat;
+
     color:white;
 
     font-family:Georgia, serif;
+
 
 }
 
@@ -186,11 +190,27 @@ body.unlocked {
 
 body.unlocked .terminal {
 
-    background:rgba(0,0,0,0.55);
 
-    border:2px solid white;
+    background:rgba(0,0,0,0.45);
 
-    box-shadow:0 0 30px white;
+    border:2px solid #ff69b4;
+
+    box-shadow:0 0 30px #ff69b4;
+
+
+}
+
+
+
+body.unlocked button {
+
+
+    background:rgba(0,0,0,0.4);
+
+    color:#ff69b4;
+
+    border-color:#ff69b4;
+
 
 }
 
@@ -204,19 +224,15 @@ body.unlocked input {
 
 
 
-body.unlocked button {
+#login {
 
-    background:rgba(0,0,0,0.4);
-
-    color:white;
-
-    border-color:white;
+    display:block;
 
 }
 
 
 
-body.unlocked #login {
+#welcome {
 
     display:none;
 
@@ -224,7 +240,7 @@ body.unlocked #login {
 
 
 
-#welcome {
+body.unlocked #login {
 
     display:none;
 
@@ -280,6 +296,7 @@ Bitte gib den Schlüssel ein.
 <input id="password" placeholder="CODE EINGEBEN">
 
 
+
 <button onclick="checkPassword()">
 
 [ BESTÄTIGEN ]
@@ -291,6 +308,7 @@ Bitte gib den Schlüssel ein.
 
 
 </div>
+
 
 
 
@@ -309,13 +327,9 @@ Zugang erfolgreich.
 
 
 <p>
-Du hast die erste Ebene erreicht.
-</p>
-
-
-<p>
 Deine Reise beginnt jetzt.
 </p>
+
 
 
 <button onclick="location.href='mission1.html'">
@@ -326,7 +340,6 @@ Deine Reise beginnt jetzt.
 
 
 </div>
-
 
 
 </div>
@@ -376,7 +389,6 @@ document.body.classList.add("unlocked");
 
 }
 
-
 else{
 
 
@@ -392,6 +404,7 @@ document.getElementById("password").value="";
 
 
 }
+
 
 
 </script>
