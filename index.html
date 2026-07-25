@@ -1,143 +1,142 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>System Activation</title>
+<title>System Booting</title>
 
 <style>
 
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-body{
+
+body {
+
     margin:0;
     height:100vh;
+
     background:black;
+
     color:#00ff66;
+
     font-family:"Courier New", monospace;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
 }
 
-.container{
+
+.container {
+
     width:90%;
     max-width:600px;
+
 }
 
-.terminal{
+
+.terminal {
+
     border:2px solid #00ff66;
+
     padding:30px;
-    text-align:center;
+
     box-shadow:0 0 25px #00ff66;
+
 }
 
-h1{
+
+h1 {
+
+    text-align:center;
+
     font-size:28px;
+
+    margin-bottom:30px;
+
 }
 
-p{
+
+#text {
+
     font-size:18px;
-    line-height:1.6;
+
+    line-height:1.7;
+
+    min-height:250px;
+
 }
 
-button{
+
+button {
+
     margin-top:30px;
+
     padding:15px 35px;
+
     background:black;
+
     color:#00ff66;
+
     border:2px solid #00ff66;
+
     font-family:"Courier New", monospace;
+
     font-size:18px;
+
     cursor:pointer;
-    transition:.2s;
+
 }
 
-button:hover{
+
+button:hover {
+
     background:#00ff66;
+
     color:black;
+
 }
 
-.hidden{
-    display:none;
-}
-
-#boot{
-    text-align:left;
-    margin-top:20px;
-    min-height:280px;
-}
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
+
 <div class="terminal">
 
-<h1>SYSTEM OFFLINE</h1>
 
-<p>Audio-System nicht aktiviert.</p>
-<p>Initialisierung erforderlich.</p>
+<h1>
+SYSTEM BOOTING...
+</h1>
 
-<button onclick="activateSystem()">
-[ ACTIVATE SYSTEM ]
-</button>
 
-<div id="boot" class="hidden">
-<p id="text"></p>
-</div>
+<div id="text"></div>
+
 
 </div>
 
+
 </div>
+
+
 
 <script>
 
-let audioContext;
-
-
-// Weicher Klickton
-function playSound(){
-
-    if(!audioContext) return;
-
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-
-    osc.type = "triangle";
-
-    osc.frequency.value = 180 + Math.random()*30;
-
-    gain.gain.setValueAtTime(0.0025,audioContext.currentTime);
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        audioContext.currentTime+0.018
-    );
-
-    osc.connect(gain);
-    gain.connect(audioContext.destination);
-
-    osc.start();
-    osc.stop(audioContext.currentTime+0.018);
-
-}
-
-
 
 const lines=[
-
-"SYSTEM BOOTING...",
-
-"",
 
 "Identität wird geprüft...",
 
@@ -153,6 +152,8 @@ const lines=[
 
 "Sicherheitsprotokolle werden geladen...",
 
+"Unbekannter Zugriffspunkt gefunden...",
+
 "",
 
 "System bereit."
@@ -161,84 +162,89 @@ const lines=[
 
 
 let line=0;
+
 let char=0;
+
 
 
 function typeText(){
 
-    if(line < lines.length){
 
-        if(char < lines[line].length){
+if(line < lines.length){
 
-            let text=document.getElementById("text");
 
-            text.innerHTML += lines[line].charAt(char);
+if(char < lines[line].length){
 
-            // Nur manchmal ein Klick
-            if(Math.random()>0.45){
-                playSound();
-            }
 
-            char++;
+document.getElementById("text").innerHTML +=
+lines[line].charAt(char);
 
-            setTimeout(typeText,50);
 
-        }
+char++;
 
-        else{
 
-            document.getElementById("text").innerHTML += "<br>";
+setTimeout(typeText,50);
 
-            line++;
-            char=0;
 
-            setTimeout(typeText,700);
+}
 
-        }
 
-    }
+else{
 
-    else{
 
-        setTimeout(()=>{
+document.getElementById("text").innerHTML += "<br>";
 
-            document.getElementById("text").innerHTML +=
-            "<br><br>[ ACCESS GRANTED ]";
 
-            setTimeout(()=>{
+line++;
 
-                document.getElementById("text").innerHTML +=
-                "<br><br><button onclick=\"location.href='mission1.html'\">[ MISSION STARTEN ]</button>";
+char=0;
 
-            },1000);
 
-        },1000);
+setTimeout(typeText,700);
 
-    }
+
+}
+
+
+}
+
+
+else{
+
+
+setTimeout(()=>{
+
+
+document.getElementById("text").innerHTML +=
+"<br><br>[ ACCESS GRANTED ]";
+
+
+setTimeout(()=>{
+
+
+document.getElementById("text").innerHTML +=
+"<br><br><button onclick=\"location.href='mission1.html'\">[ MISSION STARTEN ]</button>";
+
+
+},1000);
+
+
+},1000);
+
+
+}
+
 
 }
 
 
 
-function activateSystem(){
+typeText();
 
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-    document.querySelector("button").style.display="none";
-
-    document.querySelector("h1").innerHTML="SYSTEM ONLINE";
-
-    document.querySelectorAll("p").forEach(p=>{
-        p.style.display="none";
-    });
-
-    document.getElementById("boot").classList.remove("hidden");
-
-    typeText();
-
-}
 
 </script>
 
+
 </body>
+
 </html>
