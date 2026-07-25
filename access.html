@@ -36,7 +36,6 @@ body {
 }
 
 
-
 .container {
 
     width:90%;
@@ -140,6 +139,14 @@ button {
 
 
 
+button:hover {
+
+    opacity:0.8;
+
+}
+
+
+
 #result {
 
     margin-top:25px;
@@ -157,6 +164,7 @@ button {
 }
 
 
+
 .error {
 
     color:red;
@@ -165,7 +173,7 @@ button {
 
 
 
-/* Neues Theme */
+/* NEUES THEME */
 
 
 body.unlocked {
@@ -191,7 +199,7 @@ body.unlocked {
 body.unlocked .terminal {
 
 
-    background:rgba(0,0,0,0.45);
+    background:rgba(0,0,0,0.35);
 
     border:2px solid #ff69b4;
 
@@ -205,42 +213,30 @@ body.unlocked .terminal {
 body.unlocked button {
 
 
-    background:rgba(0,0,0,0.4);
+    background:rgba(0,0,0,0.25);
+
+    backdrop-filter:blur(5px);
 
     color:#ff69b4;
 
     border-color:#ff69b4;
 
+    box-shadow:0 0 15px rgba(255,105,180,0.5);
 
-}
-
-
-
-body.unlocked input {
-
-    display:none;
-
-}
-
-
-
-#login {
-
-    display:block;
-
-}
-
-
-
-#welcome {
-
-    display:none;
 
 }
 
 
 
 body.unlocked #login {
+
+    display:none;
+
+}
+
+
+
+#welcome {
 
     display:none;
 
@@ -270,6 +266,7 @@ body.unlocked #welcome {
 <div class="terminal">
 
 
+
 <div id="login">
 
 
@@ -288,9 +285,11 @@ Bitte gib den Schlüssel ein.
 </p>
 
 
+
 <div class="hint">
 👑
 </div>
+
 
 
 <input id="password" placeholder="CODE EINGEBEN">
@@ -302,6 +301,7 @@ Bitte gib den Schlüssel ein.
 [ BESTÄTIGEN ]
 
 </button>
+
 
 
 <div id="result"></div>
@@ -342,6 +342,7 @@ Deine Reise beginnt jetzt.
 </div>
 
 
+
 </div>
 
 
@@ -371,9 +372,57 @@ document.getElementById("result");
 if(password === "prinzessin"){
 
 
-result.innerHTML="ACCESS GRANTED";
-
 result.className="success";
+
+
+result.innerHTML =
+"ACCESS GRANTED<br><br>Verbindung wird getrennt...<br><br>Neue Umgebung wird geladen...";
+
+
+
+setTimeout(()=>{
+
+
+let progress = 0;
+
+
+
+let loading = setInterval(()=>{
+
+
+progress += 10;
+
+
+
+let blocks =
+"█".repeat(progress / 10);
+
+
+
+let empty =
+"░".repeat(10 - (progress / 10));
+
+
+
+result.innerHTML =
+"ACCESS GRANTED<br><br>Neue Umgebung wird geladen...<br><br>"
++
+blocks
++
+empty
++
+" "
++
+progress
++
+"%";
+
+
+
+if(progress >= 100){
+
+
+clearInterval(loading);
 
 
 
@@ -383,11 +432,24 @@ setTimeout(()=>{
 document.body.classList.add("unlocked");
 
 
-},2000);
+},1000);
 
 
 
 }
+
+
+
+},300);
+
+
+
+},1500);
+
+
+
+}
+
 
 else{
 
